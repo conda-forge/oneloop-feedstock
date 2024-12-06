@@ -24,7 +24,7 @@ build:
     - python create.py dynamic
     - mkdir -p $PREFIX/include/oneloop
     - mv *.mod $PREFIX/include/oneloop/
-    - mv libavh_olo.so $PREFIX/lib/
+    - mv libavh_olo${SHLIB_EXT} $PREFIX/lib/
     - ./clean.sh
 
 requirements:
