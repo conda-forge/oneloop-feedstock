@@ -17,6 +17,8 @@ build:
   script:
     - sed -i "s|FC = gfortran|FC = $FC|g" Config
     - sed -i "s|FFLAGS = -O|FFLAGS = $FFLAGS|g" Config
+    # FIXME: Link in libgfortran for arm64 macOS
+    - sed -i "s/fc,'-shared',/fc,'-shared','-lgfortran',/g" create.py  # [osx and arm64]
     - python create.py dynamic
     - mkdir -p $PREFIX/include/oneloop
     - mv *.mod $PREFIX/include/oneloop/
