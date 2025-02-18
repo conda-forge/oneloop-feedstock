@@ -45,6 +45,7 @@ outputs:
       source_files:
         - src/
         - example/
+        - example_cpp/
       requires:
         - {{ compiler('fortran') }}
         - {{ compiler('cxx') }}
@@ -126,6 +127,7 @@ outputs:
       source_files:
         - src/
         - example/
+        - example_cpp/
       requires:
         - {{ compiler('fortran') }}
         - {{ compiler('cxx') }}
