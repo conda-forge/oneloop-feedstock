@@ -47,6 +47,7 @@ outputs:
         - example/
       requires:
         - {{ compiler('fortran') }}
+        - {{ compiler('cxx') }}
         - python
       commands:
         - test -f $PREFIX/lib/libavh_olo${SHLIB_EXT}
@@ -94,7 +95,12 @@ outputs:
         - unset WITHCOLI
         # Use $LDFLAGS for more generic solution to -L$PREFIX/lib
         - $FC $FFLAGS example16.f -o example -I$PREFIX/include/oneloop $LDFLAGS -lavh_olo
-        - ./example < input  # [build_platform == target_platform]
+        - ./example < input
+        - cd ..
+
+        - cd example_cpp
+        - $CXX example.cpp -o example_cpp $CXXFLAGS -I. $LDFLAGS -lavh_olo -lgfortran
+        - ./example_cpp
 
   - name: {{ name }}-static
 
@@ -122,6 +128,7 @@ outputs:
         - example/
       requires:
         - {{ compiler('fortran') }}
+        - {{ compiler('cxx') }}
         - python
       commands:
         - test -f $PREFIX/lib/libavh_olo.a
@@ -170,7 +177,12 @@ outputs:
         - unset WITHCOLI
         # Use $LDFLAGS for more generic solution to -L$PREFIX/lib
         - $FC $FFLAGS example16.f -o example -I$PREFIX/include/oneloop $LDFLAGS -lavh_olo
-        - ./example < input  # [build_platform == target_platform]
+        - ./example < input
+        - cd ..
+
+        - cd example_cpp
+        - $CXX example.cpp -o example_cpp $CXXFLAGS -I. $LDFLAGS -lavh_olo -lgfortran
+        - ./example_cpp
 
 about:
   home: https://bitbucket.org/hameren/oneloop/
