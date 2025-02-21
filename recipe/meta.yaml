@@ -69,8 +69,24 @@ outputs:
         - test -f $PREFIX/include/oneloop/avh_olo_dp_tri.mod
         - test -f $PREFIX/include/oneloop/avh_olo_dp_box.mod
         - test -f $PREFIX/include/oneloop/avh_olo_dp_boxc.mod
-        - test -f $PREFIX/include/oneloop/avh_olo_qp_kinds.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_kinds.mod  # [(linux and aarch64) or osx]
+        - test -f $PREFIX/include/oneloop/avh_olo_qp_kinds.mod  # [not ((linux and aarch64) or osx)]
         - test -f $PREFIX/include/oneloop/avh_olo_dp.mod
+      {% if ((linux and aarch64) or osx) %}
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_arrays.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_prec.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_print.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_auxfun.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_olog.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_dilog.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_bnlog.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_qmplx.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_bub.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_tri.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_box.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_boxc.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp.mod
+      {% else %}
         - test -f $PREFIX/include/oneloop/avh_olo_qp_arrays.mod
         - test -f $PREFIX/include/oneloop/avh_olo_qp_prec.mod
         - test -f $PREFIX/include/oneloop/avh_olo_qp_print.mod
@@ -84,6 +100,7 @@ outputs:
         - test -f $PREFIX/include/oneloop/avh_olo_qp_box.mod
         - test -f $PREFIX/include/oneloop/avh_olo_qp_boxc.mod
         - test -f $PREFIX/include/oneloop/avh_olo_qp.mod
+      {% endif %}
         - test -f $PREFIX/include/oneloop/avh_olo.mod
 
         - cd example
@@ -149,8 +166,24 @@ outputs:
         - test -f $PREFIX/include/oneloop/avh_olo_dp_tri.mod
         - test -f $PREFIX/include/oneloop/avh_olo_dp_box.mod
         - test -f $PREFIX/include/oneloop/avh_olo_dp_boxc.mod
-        - test -f $PREFIX/include/oneloop/avh_olo_qp_kinds.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_kinds.mod  # [(linux and aarch64) or osx]
+        - test -f $PREFIX/include/oneloop/avh_olo_qp_kinds.mod  # [not ((linux and aarch64) or osx)]
         - test -f $PREFIX/include/oneloop/avh_olo_dp.mod
+      {% if ((linux and aarch64) or osx) %}
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_arrays.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_prec.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_print.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_auxfun.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_olog.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_dilog.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_bnlog.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_qmplx.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_bub.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_tri.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_box.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp_boxc.mod
+        - test ! -f $PREFIX/include/oneloop/avh_olo_qp.mod
+      {% else %}
         - test -f $PREFIX/include/oneloop/avh_olo_qp_arrays.mod
         - test -f $PREFIX/include/oneloop/avh_olo_qp_prec.mod
         - test -f $PREFIX/include/oneloop/avh_olo_qp_print.mod
@@ -164,6 +197,7 @@ outputs:
         - test -f $PREFIX/include/oneloop/avh_olo_qp_box.mod
         - test -f $PREFIX/include/oneloop/avh_olo_qp_boxc.mod
         - test -f $PREFIX/include/oneloop/avh_olo_qp.mod
+      {% endif %}
         - test -f $PREFIX/include/oneloop/avh_olo.mod
 
         - cd example
