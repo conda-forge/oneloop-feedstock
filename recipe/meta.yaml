@@ -12,7 +12,7 @@ source:
   sha256: fa36c0716ab0526cb98693094b7efa2219434bed9f59429f123b654a33309848
 
 build:
-  number: 2
+  number: 3
 
 outputs:
   - name: {{ name }}
@@ -24,6 +24,10 @@ outputs:
       script:
         - sed -i "s|FC = gfortran|FC = $FC|g" Config
         - sed -i "s|FFLAGS = -O|FFLAGS = $FFLAGS|g" Config
+        # Disable quad precision on systems that don't support libquadmath
+        # (linux-aarch64, osx)
+        - sed -i "/QPKIND/d" Config  # [linux-aarch64 or osx]
+        - cat Config
         # Get .dylib extension for macOS
         - sed -i "s|libavh_olo.so|libavh_olo${SHLIB_EXT}|g" create.py  # [osx]
         # FIXME: Link in libgfortran for arm64 macOS
@@ -103,6 +107,10 @@ outputs:
       script:
         - sed -i "s|FC = gfortran|FC = $FC|g" Config
         - sed -i "s|FFLAGS = -O|FFLAGS = $FFLAGS|g" Config
+        # Disable quad precision on systems that don't support libquadmath
+        # (linux-aarch64, osx)
+        - sed -i "/QPKIND/d" Config  # [linux-aarch64 or osx]
+        - cat Config
         - python create.py
         - mkdir -p $PREFIX/include/oneloop
         - mv *.mod $PREFIX/include/oneloop/
