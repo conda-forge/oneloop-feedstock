@@ -26,6 +26,7 @@ outputs:
         - sed -i "s|FFLAGS = -O|FFLAGS = $FFLAGS|g" Config
         # Disable quad precision on systems that don't support libquadmath
         - sed -i "/QPKIND/d" Config  # [(linux and aarch64) or osx]
+        - echo -e "\n# Config file"
         - cat Config
         # Get .dylib extension for macOS
         - sed -i "s|libavh_olo.so|libavh_olo${SHLIB_EXT}|g" create.py  # [osx]
@@ -108,6 +109,7 @@ outputs:
         - sed -i "s|FFLAGS = -O|FFLAGS = $FFLAGS|g" Config
         # Disable quad precision on systems that don't support libquadmath
         - sed -i "/QPKIND/d" Config  # [(linux and aarch64) or osx]
+        - echo -e "\n# Config file"
         - cat Config
         - python create.py
         - mkdir -p $PREFIX/include/oneloop
