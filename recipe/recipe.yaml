@@ -143,13 +143,20 @@ outputs:
               - $FC $FFLAGS example16.f -o example16 -I$PREFIX/include/oneloop $LDFLAGS -lavh_olo
               - ./example16 < input
 
+          - cd ..
+          - cd example_cpp
+          - $CXX example.cpp -o example_cpp $CXXFLAGS -I. $LDFLAGS -lavh_olo -lgfortran
+          - ./example_cpp
+
         files:
           source:
             - src/
             - example/
+            - example_cpp/
         requirements:
           run:
             - ${{ compiler('fortran') }}
+            - ${{ compiler('cxx') }}
             - python
 
   - package:
@@ -269,13 +276,20 @@ outputs:
               - $FC $FFLAGS example16.f -o example16 -I$PREFIX/include/oneloop $LDFLAGS -lavh_olo
               - ./example16 < input
 
+          - cd ..
+          - cd example_cpp
+          - $CXX example.cpp -o example_cpp $CXXFLAGS -I. $LDFLAGS -lavh_olo -lgfortran
+          - ./example_cpp
+
         files:
           source:
             - src/
             - example/
+            - example_cpp/
         requirements:
           run:
             - ${{ compiler('fortran') }}
+            - ${{ compiler('cxx') }}
             - python
 
 about:
