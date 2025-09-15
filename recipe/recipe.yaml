@@ -13,7 +13,7 @@ source:
   sha256: fa36c0716ab0526cb98693094b7efa2219434bed9f59429f123b654a33309848
 
 build:
-  number: 4
+  number: 5
   skip: win
 
 outputs:
@@ -53,58 +53,70 @@ outputs:
         - python >=3.6
 
     tests:
-      - script:
-          - test -f $PREFIX/lib/libavh_olo${SHLIB_EXT}
-          - test -f $PREFIX/include/oneloop/avh_olo_version.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_units.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_kinds.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_arrays.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_prec.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_print.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_auxfun.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_olog.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_dilog.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_bnlog.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_qmplx.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_bub.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_tri.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_box.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_boxc.mod
-          - if: (linux and aarch64) or osx
-            then: test ! -f $PREFIX/include/oneloop/avh_olo_qp_kinds.mod
-            else: test -f $PREFIX/include/oneloop/avh_olo_qp_kinds.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp.mod
-          - if: (linux and aarch64) or osx
-            then:
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_arrays.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_prec.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_print.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_auxfun.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_olog.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_dilog.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_bnlog.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_qmplx.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_bub.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_tri.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_box.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_boxc.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp.mod
-            else:
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_arrays.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_prec.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_print.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_auxfun.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_olog.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_dilog.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_bnlog.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_qmplx.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_bub.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_tri.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_box.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_boxc.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp.mod
-          - test -f $PREFIX/include/oneloop/avh_olo.mod
+      - package_contents:
+          strict: true
+          files:
+              # FIXME: These seem unnecessary, and unclear why they exist
+              - etc/conda/test-files/oneloop/*
+          include:
+            exists:
+              - oneloop/avh_olo_version.mod
+              - oneloop/avh_olo_units.mod
+              - oneloop/avh_olo_dp_kinds.mod
+              - oneloop/avh_olo_dp_arrays.mod
+              - oneloop/avh_olo_dp_prec.mod
+              - oneloop/avh_olo_dp_print.mod
+              - oneloop/avh_olo_dp_auxfun.mod
+              - oneloop/avh_olo_dp_olog.mod
+              - oneloop/avh_olo_dp_dilog.mod
+              - oneloop/avh_olo_dp_bnlog.mod
+              - oneloop/avh_olo_dp_qmplx.mod
+              - oneloop/avh_olo_dp_bub.mod
+              - oneloop/avh_olo_dp_tri.mod
+              - oneloop/avh_olo_dp_box.mod
+              - oneloop/avh_olo_dp_boxc.mod
+              - if: not ((linux and aarch64) or osx)
+                then:
+                  - oneloop/avh_olo_qp_kinds.mod
+                  - oneloop/avh_olo_qp_arrays.mod
+                  - oneloop/avh_olo_qp_prec.mod
+                  - oneloop/avh_olo_qp_print.mod
+                  - oneloop/avh_olo_qp_auxfun.mod
+                  - oneloop/avh_olo_qp_olog.mod
+                  - oneloop/avh_olo_qp_dilog.mod
+                  - oneloop/avh_olo_qp_bnlog.mod
+                  - oneloop/avh_olo_qp_qmplx.mod
+                  - oneloop/avh_olo_qp_bub.mod
+                  - oneloop/avh_olo_qp_tri.mod
+                  - oneloop/avh_olo_qp_box.mod
+                  - oneloop/avh_olo_qp_boxc.mod
+                  - oneloop/avh_olo_qp.mod
+              - oneloop/avh_olo_dp.mod
+              - oneloop/avh_olo.mod
+            not_exists:
+              - if: (linux and aarch64) or osx
+                then:
+                  - oneloop/avh_olo_qp_kinds.mod
+                  - oneloop/avh_olo_qp_arrays.mod
+                  - oneloop/avh_olo_qp_prec.mod
+                  - oneloop/avh_olo_qp_print.mod
+                  - oneloop/avh_olo_qp_auxfun.mod
+                  - oneloop/avh_olo_qp_olog.mod
+                  - oneloop/avh_olo_qp_dilog.mod
+                  - oneloop/avh_olo_qp_bnlog.mod
+                  - oneloop/avh_olo_qp_qmplx.mod
+                  - oneloop/avh_olo_qp_bub.mod
+                  - oneloop/avh_olo_qp_tri.mod
+                  - oneloop/avh_olo_qp_box.mod
+                  - oneloop/avh_olo_qp_boxc.mod
+                  - oneloop/avh_olo_qp.mod
+          lib:
+            exists:
+              - avh_olo
+            not_exists:
+              - libavh_olo.a
 
+      - script:
           - cd example
           - export WITHLT=no
           - export LTVSNge26=yes
@@ -168,59 +180,69 @@ outputs:
         - python >=3.6
 
     tests:
-      - script:
-          - test -f $PREFIX/lib/libavh_olo.a
-          - test ! -f $PREFIX/lib/libavh_olo${SHLIB_EXT}
-          - test -f $PREFIX/include/oneloop/avh_olo_version.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_units.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_kinds.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_arrays.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_prec.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_print.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_auxfun.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_olog.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_dilog.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_bnlog.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_qmplx.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_bub.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_tri.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_box.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp_boxc.mod
-          - if: (linux and aarch64) or osx
-            then: test ! -f $PREFIX/include/oneloop/avh_olo_qp_kinds.mod
-            else: test -f $PREFIX/include/oneloop/avh_olo_qp_kinds.mod
-          - test -f $PREFIX/include/oneloop/avh_olo_dp.mod
-          - if: (linux and aarch64) or osx
-            then:
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_arrays.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_prec.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_print.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_auxfun.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_olog.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_dilog.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_bnlog.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_qmplx.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_bub.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_tri.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_box.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp_boxc.mod
-              - test ! -f $PREFIX/include/oneloop/avh_olo_qp.mod
-            else:
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_arrays.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_prec.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_print.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_auxfun.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_olog.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_dilog.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_bnlog.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_qmplx.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_bub.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_tri.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_box.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp_boxc.mod
-              - test -f $PREFIX/include/oneloop/avh_olo_qp.mod
-          - test -f $PREFIX/include/oneloop/avh_olo.mod
+      - package_contents:
+          strict: true
+          files:
+              - lib/libavh_olo.a
+              # FIXME: These seem unnecessary, and unclear why they exist
+              - etc/conda/test-files/oneloop-static/*
+          include:
+            exists:
+              - oneloop/avh_olo_version.mod
+              - oneloop/avh_olo_units.mod
+              - oneloop/avh_olo_dp_kinds.mod
+              - oneloop/avh_olo_dp_arrays.mod
+              - oneloop/avh_olo_dp_prec.mod
+              - oneloop/avh_olo_dp_print.mod
+              - oneloop/avh_olo_dp_auxfun.mod
+              - oneloop/avh_olo_dp_olog.mod
+              - oneloop/avh_olo_dp_dilog.mod
+              - oneloop/avh_olo_dp_bnlog.mod
+              - oneloop/avh_olo_dp_qmplx.mod
+              - oneloop/avh_olo_dp_bub.mod
+              - oneloop/avh_olo_dp_tri.mod
+              - oneloop/avh_olo_dp_box.mod
+              - oneloop/avh_olo_dp_boxc.mod
+              - if: not ((linux and aarch64) or osx)
+                then:
+                  - oneloop/avh_olo_qp_kinds.mod
+                  - oneloop/avh_olo_qp_arrays.mod
+                  - oneloop/avh_olo_qp_prec.mod
+                  - oneloop/avh_olo_qp_print.mod
+                  - oneloop/avh_olo_qp_auxfun.mod
+                  - oneloop/avh_olo_qp_olog.mod
+                  - oneloop/avh_olo_qp_dilog.mod
+                  - oneloop/avh_olo_qp_bnlog.mod
+                  - oneloop/avh_olo_qp_qmplx.mod
+                  - oneloop/avh_olo_qp_bub.mod
+                  - oneloop/avh_olo_qp_tri.mod
+                  - oneloop/avh_olo_qp_box.mod
+                  - oneloop/avh_olo_qp_boxc.mod
+                  - oneloop/avh_olo_qp.mod
+              - oneloop/avh_olo_dp.mod
+              - oneloop/avh_olo.mod
+            not_exists:
+              - if: (linux and aarch64) or osx
+                then:
+                  - oneloop/avh_olo_qp_kinds.mod
+                  - oneloop/avh_olo_qp_arrays.mod
+                  - oneloop/avh_olo_qp_prec.mod
+                  - oneloop/avh_olo_qp_print.mod
+                  - oneloop/avh_olo_qp_auxfun.mod
+                  - oneloop/avh_olo_qp_olog.mod
+                  - oneloop/avh_olo_qp_dilog.mod
+                  - oneloop/avh_olo_qp_bnlog.mod
+                  - oneloop/avh_olo_qp_qmplx.mod
+                  - oneloop/avh_olo_qp_bub.mod
+                  - oneloop/avh_olo_qp_tri.mod
+                  - oneloop/avh_olo_qp_box.mod
+                  - oneloop/avh_olo_qp_boxc.mod
+                  - oneloop/avh_olo_qp.mod
+          lib:
+            not_exists:
+              - avh_olo
 
+      - script:
           - cd example
           - export WITHLT=no
           - export LTVSNge26=yes
