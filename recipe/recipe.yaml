@@ -280,7 +280,9 @@ outputs:
           - cd ..
           - cd example_cpp
           - env
-          - $CXX example.cpp -o example_cpp $CXXFLAGS -I. $LDFLAGS -lavh_olo -lgfortran
+          - if: ((linux and aarch64) or osx)
+            then: $CXX example.cpp -o example_cpp $CXXFLAGS -I. $LDFLAGS -lavh_olo -lgfortran
+            else: $CXX example.cpp -o example_cpp $CXXFLAGS -I. $LDFLAGS -lavh_olo -lgfortran -lquadmath
           - ./example_cpp
 
         files:
