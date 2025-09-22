@@ -1,0 +1,27 @@
+From 5fe7b597ba84793018d660d08475bd2fa7a1bded Mon Sep 17 00:00:00 2001
+From: Matthew Feickert <matthew.feickert@cern.ch>
+Date: Mon, 22 Sep 2025 16:07:36 -0600
+Subject: [PATCH] FIX: Use correct rank
+
+* In the file avh_olo_bub.f90 on line 79, "rank" should be "rank/2".
+  - Andreas van Hameren, 2025-09-22
+---
+ src/avh_olo_bub.f90 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/avh_olo_bub.f90 b/src/avh_olo_bub.f90
+index 54bd4d2..7eec560 100644
+--- a/src/avh_olo_bub.f90
++++ b/src/avh_olo_bub.f90
+@@ -76,7 +76,7 @@ contains
+   integer :: ii
+ ![CALLINGME  write(*,*) 'MESSAGE from OneLOop tadpn: you are calling me'
+ !
+-  do ii=0,rank
++  do ii=0,rank/2
+     rslt(2,ii) = 0
+     rslt(1,ii) = 0
+     rslt(0,ii) = 0
+-- 
+2.51.0
+
