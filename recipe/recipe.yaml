@@ -11,6 +11,8 @@ recipe:
 source:
   url: https://bitbucket.org/hameren/${{ name }}/get/v${{ version }}.zip
   sha256: fa36c0716ab0526cb98693094b7efa2219434bed9f59429f123b654a33309848
+  patches:
+    - rank-bug.patch
 
 build:
   number: 5
@@ -143,13 +145,21 @@ outputs:
               - $FC $FFLAGS example16.f -o example16 -I$PREFIX/include/oneloop $LDFLAGS -lavh_olo
               - ./example16 < input
 
+          - cd ..
+          - cd example_cpp
+          - env
+          - $CXX example.cpp -o example_cpp $CXXFLAGS -I. $LDFLAGS -lavh_olo -lgfortran
+          - ./example_cpp
+
         files:
           source:
             - src/
             - example/
+            - example_cpp/
         requirements:
           run:
             - ${{ compiler('fortran') }}
+            - ${{ compiler('cxx') }}
             - python
 
   - package:
@@ -269,13 +279,23 @@ outputs:
               - $FC $FFLAGS example16.f -o example16 -I$PREFIX/include/oneloop $LDFLAGS -lavh_olo
               - ./example16 < input
 
+          - cd ..
+          - cd example_cpp
+          - env
+          - if: ((linux and aarch64) or osx)
+            then: $CXX example.cpp -o example_cpp $CXXFLAGS -I. $LDFLAGS -lavh_olo -lgfortran
+            else: $CXX example.cpp -o example_cpp $CXXFLAGS -I. $LDFLAGS -lavh_olo -lgfortran -lquadmath
+          - ./example_cpp
+
         files:
           source:
             - src/
             - example/
+            - example_cpp/
         requirements:
           run:
             - ${{ compiler('fortran') }}
+            - ${{ compiler('cxx') }}
             - python
 
 about:
